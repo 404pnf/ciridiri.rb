@@ -6,6 +6,7 @@
   <link rel="stylesheet" media="print" href="/css/print.css" />
   <script src="/js/application.js"></script>
   <title>
+    <%= @page.title + " / " if @page && @page.title%>
     ciridiri.rb: dead simple wiki engine
   </title>
 </head>

@@ -1,0 +1,16 @@
+<h1>Edit page</h1>
+<script type="text/javascript">
+window.onload = function() {
+  document.getElementById('p-content').focus();
+}
+</script>
+<form action="<%= @page.uri %>.html" method="post" onkeypress="ctrlEnterSubmit(event, this)">
+<fieldset>
+  <div>
+    <textarea rows="30" cols="20" id="p-content" name="content" style="width: 100%"><%= h @page.content %></textarea>
+  </div>
+</fieldset>
+<fieldset class="submits">
+    <input type="submit" value="Save" /> or <a href="<%= @page.uri %>.html">cancel</a>
+</fieldset>
+</form>
