@@ -51,9 +51,9 @@ module Ciridiri
 
     protected
     def self.find_title(content="")
-      if content_candidate = content.detect {|s| s.match(MD_TITLE)}
+      if content.detect {|s| s.match(MD_TITLE)}
         $2.strip || $4.strip
-      elsif h_candidate = content.detect {|s| s.match(HTML_TITLE)} 
+      elsif content.detect {|s| s.match(HTML_TITLE)}
         $2.strip
       else
         ""
