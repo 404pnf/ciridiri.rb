@@ -1,6 +1,6 @@
 module Ciridiri
   class Page
-    MD_TITLE = Regexp.new("(^\#{0,3}\\s*?(\\S.*?)\#{0,3}*$)|(^ {0,3}(\\S.*?)\\n=+(?=\\n+|\\Z))", Regexp::MULTILINE)
+    MD_TITLE = Regexp.new("(^\#{1,3}\\s*?([^#].*?)#*$)|(^ {0,3}(\\S.*?)\\n(?:=|-)+(?=\\n+|\\Z))", Regexp::MULTILINE)
     HTML_TITLE = Regexp.new("^<h[1-4] (.*)+>(.*)+</h[1-4]>")
     SOURCE_FILE_EXT = ".md".freeze
 
