@@ -8,13 +8,15 @@ module Ciridiri
     attr_reader :path, :uri
 
     @@content_dir = '.'
+    @@backups = false
 
     def initialize(uri, contents)
       @path, @uri, @title, @content = Page.path_from_uri(uri), uri, Page.find_title(contents), contents
     end
 
     def save
-      File.exists?(@path) ? backup_file : create_needed_dirs
+      create_needed_dirs unless File.exists?(@path)
+      backup_file if @@backups
 
       begin
         File.open(@path, "w") {|f| f.write(@content)}
@@ -29,8 +31,8 @@ module Ciridiri
       FileUtils.mkdir_p(@@content_dir) if !File.exists?(@@content_dir)
     end
 
-    def self.content_dir
-      @@content_dir
+    def self.backups=(backups)
+      @@backups = backups
     end
 
     def self.find_by_uri(uri)
@@ -80,7 +82,7 @@ module Ciridiri
     end
 
     def backup_file
-      FileUtils.cp(@path, @path.sub(Regexp.new("#{SOURCE_FILE_EXT}$"), ".#{Time.now.to_i.to_s}.#{SOURCE_FILE_EXT}"))
+      FileUtils.cp(@path, @path.sub(Regexp.new("#{SOURCE_FILE_EXT}$"), ".#{Time.now.to_i.to_s}#{SOURCE_FILE_EXT}"))
     end
     
   end
