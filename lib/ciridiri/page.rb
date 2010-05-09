@@ -3,7 +3,7 @@ require 'fileutils'
 module Ciridiri
   class Page
     MD_TITLE = Regexp.new("(^\#{1,3}\\s*?([^#].*?)#*$)|(^ {0,3}(\\S.*?)\\n(?:=|-)+(?=\\n+|\\Z))", Regexp::MULTILINE)
-    HTML_TITLE = Regexp.new("^<h[1-4] (.*)+>(.*)+</h[1-4]>")
+    HTML_TITLE = Regexp.new("^<h[1-3](.*)?>(.*)+</h[1-3]>")
     SOURCE_FILE_EXT = ".md".freeze
 
     attr_accessor :title, :content
@@ -33,9 +33,13 @@ module Ciridiri
       FileUtils.mkdir_p(@@content_dir) if !File.exists?(@@content_dir)
     end
 
+    def self.content_dir; @@content_dir; end
+
     def self.backups=(backups)
       @@backups = backups
     end
+
+    def self.backups; @@backups; end
 
     def self.find_by_uri(uri)
       content_path = path_from_uri(uri)
@@ -78,9 +82,7 @@ module Ciridiri
     end
 
     def create_needed_dirs
-      a = @uri.split('/')
-      a.pop
-      FileUtils.mkdir_p(File.join(@@content_dir, a))
+      FileUtils.mkdir_p(File.dirname(@path))
     end
 
     def backup_file
