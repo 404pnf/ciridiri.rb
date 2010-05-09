@@ -1,5 +1,5 @@
 $LOAD_PATH.unshift(File.dirname(__FILE__)) unless $LOAD_PATH.include?(File.dirname(__FILE__))
-%w[fileutils finders paths].each {|r| require r}
+%w[fileutils finders paths extensions].each {|r| require r}
 
 module Ciridiri
   class Page
@@ -16,6 +16,8 @@ module Ciridiri
     @@backups = false
     @@caching = true
     @@formatter = lambda {|text| text}
+
+    cattr_accessor :content_dir, :backups, :caching, :formatter
 
     def initialize(uri, contents)
       @path, @uri, @title, @content = Page.path_from_uri(uri), uri, Page.find_title(contents), contents
@@ -60,17 +62,6 @@ module Ciridiri
       @@content_dir = dir
       FileUtils.mkdir_p(@@content_dir) if !File.exists?(@@content_dir)
     end
-
-    def self.content_dir; @@content_dir; end
-
-    def self.backups=(backups); @@backups = backups; end
-    def self.backups?; @@backups; end
-
-    def self.caching=(caching); @@caching = caching; end
-    def self.caching?; @@caching; end
-
-    def self.formatter=(formatter); @@formatter = formatter; end
-    def self.formatter; @@formatter; end
 
     protected
     def self.find_title(content="")
