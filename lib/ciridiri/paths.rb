@@ -1,16 +1,11 @@
 module Ciridiri
   module Paths
+    # converts `uri` to `path` in a file system including `content_dir` and a source file extension
+    # `/team/pro/chuck-norris` -> `content_dir/team/pro/chuck-norris.text`
     def path_from_uri(uri)
       path = uri.split("/")
       filename = path.pop
       File.join(content_dir, path, "#{filename}#{Page::SOURCE_FILE_EXT}")
-    end
-
-    def uri_from_path(path)
-      segments = path.split(File::Separator)
-      filename = segments.pop
-      segments.push(filename.gsub("#{Page::SOURCE_FILE_EXT}", ""))
-      "/#{segments.join("/")}"
     end
 
   end
