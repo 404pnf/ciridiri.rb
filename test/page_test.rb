@@ -3,7 +3,7 @@ require 'test/unit'
 require 'lib/ciridiri/page'
 begin; require 'turn'; rescue LoadError; end
 
-Ciridiri::Page.content_dir = File.expand_path("../pages/test", __FILE__)
+Ciridiri::Page.content_dir = File.join(File.dirname(__FILE__), 'pages')
 
 class PageTest < Test::Unit::TestCase
   include Ciridiri
@@ -68,6 +68,21 @@ class PageTest < Test::Unit::TestCase
     target_path = File.expand_path(File.join(Page.content_dir, %w[about team], "boris#{Page::SOURCE_FILE_EXT}"))
     assert File.exists?(target_path)
     assert_equal target_path, File.expand_path(@page.path)
+  end
+
+  def test_it_should_create_backups_if_needed
+    begin
+      Page.backups = true
+      @page = page_stub
+      assert @page.save
+      @page.content = "foo bar"
+      assert @page.save
+
+      assert_not_nil @page.revisions
+      assert_equal @page.revisions.length, 1
+    ensure
+      Page.backups = false
+    end
   end
 
   protected

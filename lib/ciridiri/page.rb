@@ -18,7 +18,7 @@ module Ciridiri
 
     def save
       create_needed_dirs unless File.exists?(@path)
-      backup_file if @@backups
+      backup_file if @@backups && File.exists?(@path)
 
       begin
         File.open(@path, "w") {|f| f.write(@content)}
@@ -26,6 +26,10 @@ module Ciridiri
       rescue StandardError
         false
       end
+    end
+
+    def revisions
+      @revisions ||= find_revisions
     end
 
     def self.content_dir=(dir)
@@ -79,6 +83,14 @@ module Ciridiri
       filename = segments.pop
       segments.push(filename.gsub("#{SOURCE_FILE_EXT}", ""))
       "/#{segments.join("/")}"
+    end
+
+    def find_revisions
+      Dir.chdir(File.dirname(@path)) do
+        basename = File.basename(@path, SOURCE_FILE_EXT)
+        Dir.glob(basename + ".*" + SOURCE_FILE_EXT).
+                collect {|f| File.basename(f, SOURCE_FILE_EXT).sub(basename, '')}
+      end
     end
 
     def create_needed_dirs
