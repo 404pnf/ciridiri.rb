@@ -4,7 +4,7 @@ module Ciridiri
   class Page
     MD_TITLE = Regexp.new("(^\#{1,3}\\s*?([^#].*?)#*$)|(^ {0,3}(\\S.*?)\\n(?:=|-)+(?=\\n+|\\Z))", Regexp::MULTILINE)
     HTML_TITLE = Regexp.new("^<h[1-3](.*)?>(.*)+</h[1-3]>")
-    SOURCE_FILE_EXT = ".md".freeze
+    SOURCE_FILE_EXT = ".text".freeze
 
     attr_accessor :title, :content
     attr_reader :path, :uri
