@@ -7,7 +7,6 @@ include Ciridiri
 Page.content_dir = File.join(Sinatra::Application.root, "pages", Sinatra::Application.environment.to_s)
 
 configure :development do
-  Page.formatter = lambda {|t| "<pre>" + Rack::Utils.escape_html(t) + "</pre>"}
   Page.caching = false
 end
 
