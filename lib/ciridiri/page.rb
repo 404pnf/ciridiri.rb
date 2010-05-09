@@ -13,6 +13,7 @@ module Ciridiri
 
     @@content_dir = '.'
     @@backups = false
+    @@formatter = lambda {|text| text}
 
     def initialize(uri, contents)
       @path, @uri, @title, @content = Page.path_from_uri(uri), uri, Page.find_title(contents), contents
@@ -34,6 +35,10 @@ module Ciridiri
       @revisions ||= find_revisions
     end
 
+    def to_html
+      @@formatter.call(@content)
+    end
+
     def self.content_dir=(dir)
       @@content_dir = dir
       FileUtils.mkdir_p(@@content_dir) if !File.exists?(@@content_dir)
@@ -41,11 +46,11 @@ module Ciridiri
 
     def self.content_dir; @@content_dir; end
 
-    def self.backups=(backups)
-      @@backups = backups
-    end
-
+    def self.backups=(backups); @@backups = backups; end
     def self.backups; @@backups; end
+
+    def self.formatter=(formatter); @@formatter = formatter; end
+    def self.formatter; @@formatter; end
 
     protected
     def self.find_title(content="")

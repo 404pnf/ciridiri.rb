@@ -85,6 +85,17 @@ class PageTest < Test::Unit::TestCase
     end
   end
 
+  def test_it_should_format_content
+    begin
+      @page = page_stub
+      assert_equal @page.content, @page.to_html
+      Page.formatter = lambda {|t| "<censored />"}
+      assert_equal @page.to_html, "<censored />"
+    ensure
+      Page.formatter = lambda {|t| t}
+    end
+  end
+
   protected
   def page_stub(title = 'index', body = "##awesome title\n hello, everyone!")
     Page.new(title, body)
