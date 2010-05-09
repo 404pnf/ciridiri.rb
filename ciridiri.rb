@@ -6,6 +6,11 @@ include Ciridiri
 
 Ciridiri::Page.content_dir = File.join(Sinatra::Application.root, "pages", Sinatra::Application.environment.to_s)
 
+configure :development do
+  Ciridiri::Page.formatter = lambda {|t| "<pre>" + Rack::Utils.escape_html(t) + "</pre>"}
+end
+
+
 helpers do
   include Rack::Utils
   alias_method :h, :escape_html
