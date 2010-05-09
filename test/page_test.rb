@@ -4,6 +4,7 @@ require 'lib/ciridiri/page'
 begin; require 'turn'; rescue LoadError; end
 
 Ciridiri::Page.content_dir = File.join(File.dirname(__FILE__), 'pages')
+Ciridiri::Page.caching = false
 
 class PageTest < Test::Unit::TestCase
   include Ciridiri
@@ -88,11 +89,25 @@ class PageTest < Test::Unit::TestCase
   def test_it_should_format_content
     begin
       @page = page_stub
+      @page.save
       assert_equal @page.content, @page.to_html
       Page.formatter = lambda {|t| "<censored />"}
       assert_equal @page.to_html, "<censored />"
     ensure
       Page.formatter = lambda {|t| t}
+    end
+  end
+
+  def test_it_should_cache_page
+    begin
+      Page.caching = true
+      @page = page_stub
+      @page.save
+      assert_not_nil @page.to_html
+      assert File.exists?(@page.path + Page::CACHED_FILE_EXT)
+      assert File.size(@page.path + Page::CACHED_FILE_EXT) > 0
+    ensure
+      Page.caching = false
     end
   end
 

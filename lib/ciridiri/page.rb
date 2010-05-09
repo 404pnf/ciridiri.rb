@@ -7,12 +7,14 @@ module Ciridiri
     MD_TITLE = Regexp.new("(^\#{1,3}\\s*?([^#].*?)#*$)|(^ {0,3}(\\S.*?)\\n(?:=|-)+(?=\\n+|\\Z))", Regexp::MULTILINE)
     HTML_TITLE = Regexp.new("^<h[1-3](.*)?>(.*)+</h[1-3]>")
     SOURCE_FILE_EXT = ".text".freeze
+    CACHED_FILE_EXT = ".html".freeze
 
     attr_accessor :title, :content
     attr_reader :path, :uri
 
     @@content_dir = '.'
     @@backups = false
+    @@caching = true
     @@formatter = lambda {|text| text}
 
     def initialize(uri, contents)
@@ -31,12 +33,27 @@ module Ciridiri
       end
     end
 
+    def cache!
+      File.open(@path + CACHED_FILE_EXT, 'w') {|f| f.write(@@formatter.call(@content))}
+    end
+
+    def sweep!
+      File.delete(@path + CACHED_FILE_EXT)
+    end
+
     def revisions
       @revisions ||= find_revisions
     end
 
     def to_html
-      @@formatter.call(@content)
+      if @@caching
+        cached = @path + CACHED_FILE_EXT
+        cache! if !File.exists?(cached) || File.mtime(@path) > File.mtime(cached)
+
+        File.open(cached).read
+      else
+        @@formatter.call(@content)
+      end
     end
 
     def self.content_dir=(dir)
@@ -48,6 +65,9 @@ module Ciridiri
 
     def self.backups=(backups); @@backups = backups; end
     def self.backups; @@backups; end
+
+    def self.caching=(caching); @@caching = caching; end
+    def self.caching; @@caching; end
 
     def self.formatter=(formatter); @@formatter = formatter; end
     def self.formatter; @@formatter; end
