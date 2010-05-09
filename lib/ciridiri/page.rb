@@ -1,3 +1,5 @@
+require 'fileutils'
+
 module Ciridiri
   class Page
     MD_TITLE = Regexp.new("(^\#{1,3}\\s*?([^#].*?)#*$)|(^ {0,3}(\\S.*?)\\n(?:=|-)+(?=\\n+|\\Z))", Regexp::MULTILINE)
