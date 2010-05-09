@@ -15,7 +15,7 @@ module Ciridiri
     CACHED_FILE_EXT = ".html".freeze
 
     # Define attr_reader/accessors, class_accessors (we use them for configuring: `Page.content_dir = '/tmp'`)
-    attr_accessor :title, :content
+    attr_accessor :title, :contents
     attr_reader :path, :uri
 
     # ###Default values for all options
@@ -50,7 +50,7 @@ module Ciridiri
 
     # Converts `uri` to `path`, finds the `title` in `contents`
     def initialize(uri, contents)
-      @path, @uri, @title, @content = Page.path_from_uri(uri), uri, Page.find_title(contents), contents
+      @path, @uri, @title, @contents = Page.path_from_uri(uri), uri, Page.find_title(contents), contents
     end
 
     # Creates needed directory hierarchy and backups the file if needed.
@@ -60,7 +60,7 @@ module Ciridiri
       backup if Page.backups? && File.exists?(@path)
 
       begin
-        File.open(@path, "w") {|f| f.write(@content)}
+        File.open(@path, "w") {|f| f.write(@contents)}
         true
       rescue StandardError
         false
@@ -70,7 +70,7 @@ module Ciridiri
     # Saves `@contents` formatted with `Page.formatter` to the cache file
     # `index.text` -> `index.text.html`
     def cache!
-      File.open(@path + CACHED_FILE_EXT, 'w') {|f| f.write(@@formatter.call(@content))}
+      File.open(@path + CACHED_FILE_EXT, 'w') {|f| f.write(@@formatter.call(@contents))}
     end
 
     # Deletes the cache file
@@ -95,7 +95,7 @@ module Ciridiri
 
         File.open(cached).read
       else
-        @@formatter.call(@content)
+        @@formatter.call(@contents)
       end
     end
 
@@ -108,10 +108,10 @@ module Ciridiri
     protected
     # Finds the title in contents (html or markdown variant).
     # Returns `""` if nothing found.
-    def self.find_title(content="")
-      if content.detect {|s| s.match(MD_TITLE)}
+    def self.find_title(contents="")
+      if contents.detect {|s| s.match(MD_TITLE)}
         $2.strip || $4.strip
-      elsif content.detect {|s| s.match(HTML_TITLE)}
+      elsif contents.detect {|s| s.match(HTML_TITLE)}
         $2.strip
       else
         ""

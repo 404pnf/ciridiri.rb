@@ -36,7 +36,7 @@ end
 
 post '*.html' do
   @page = Page.find_by_uri_or_empty(params[:splat].first)
-  @page.content = params[:content]
+  @page.contents = params[:contents]
   @page.save
   redirect "#{@page.uri}.html"
 end

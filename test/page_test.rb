@@ -17,7 +17,7 @@ class PageTest < Test::Unit::TestCase
 
   def test_it_should_create_correct_page
     @page = page_stub
-    assert_not_nil @page.content
+    assert_not_nil @page.contents
     assert_not_nil @page.title
     assert_equal 'awesome title', @page.title
   end
@@ -39,7 +39,7 @@ class PageTest < Test::Unit::TestCase
   def test_it_should_update_page
     @page = page_stub
     @page.save
-    @page.content = "#new title\nand new content"
+    @page.contents = "#new title\nand new content"
     assert @page.save
     assert File.open(@page.path).read.include?('and new content')
   end
@@ -51,7 +51,7 @@ class PageTest < Test::Unit::TestCase
     @p = Page.find_by_uri('hidden/blah')
     assert_not_nil @p
     assert_not_nil @p.title
-    assert_not_nil @p.content
+    assert_not_nil @p.contents
   end
 
   def test_it_should_return_nil_if_page_is_not_found
@@ -76,7 +76,7 @@ class PageTest < Test::Unit::TestCase
       Page.backups = true
       @page = page_stub
       assert @page.save
-      @page.content = "foo bar"
+      @page.contents = "foo bar"
       assert @page.save
 
       assert_not_nil @page.revisions
@@ -86,11 +86,11 @@ class PageTest < Test::Unit::TestCase
     end
   end
 
-  def test_it_should_format_content
+  def test_it_should_format_contents
     begin
       @page = page_stub
       @page.save
-      assert_equal @page.content, @page.to_html
+      assert_equal @page.contents, @page.to_html
       Page.formatter = lambda {|t| "<censored />"}
       assert_equal @page.to_html, "<censored />"
     ensure
