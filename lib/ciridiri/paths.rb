@@ -1,6 +1,6 @@
 module Ciridiri
   module Paths
-    # converts `uri` to `path` in a file system including `content_dir` and a source file extension
+    # Convert `uri` to `path` in a file system including `content_dir` and a source file extension
     # `/team/pro/chuck-norris` -> `content_dir/team/pro/chuck-norris.text`
     def path_from_uri(uri)
       path = uri.split("/")
