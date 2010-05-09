@@ -1,11 +1,12 @@
 # Extends the class object with class and instance accessors for class attributes,
 # just like the native attr* accessors for instance attributes.
 #
-#  class Person
-#    cattr_accessor :hair_colors
-#  end
+#    class Person
+#      cattr_accessor :hair_colors
+#    end
 #
-#  Person.hair_colors = [:brown, :black, :blonde, :red]
+#    Person.hair_colors = [:brown, :black, :blonde, :red]
+#
 class Class
   def cattr_reader(*syms)
     syms.flatten.each do |sym|
