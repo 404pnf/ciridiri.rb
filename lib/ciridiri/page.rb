@@ -23,7 +23,7 @@ module Ciridiri
 
     def save
       FileUtils.mkdir_p(File.dirname(@path)) unless File.exists?(@path)
-      backup if @@backups && File.exists?(@path)
+      backup if Page.backups? && File.exists?(@path)
 
       begin
         File.open(@path, "w") {|f| f.write(@content)}
@@ -46,7 +46,7 @@ module Ciridiri
     end
 
     def to_html
-      if @@caching
+      if Page.caching?
         cached = @path + CACHED_FILE_EXT
         cache! if !File.exists?(cached) || File.mtime(@path) > File.mtime(cached)
 
@@ -64,10 +64,10 @@ module Ciridiri
     def self.content_dir; @@content_dir; end
 
     def self.backups=(backups); @@backups = backups; end
-    def self.backups; @@backups; end
+    def self.backups?; @@backups; end
 
     def self.caching=(caching); @@caching = caching; end
-    def self.caching; @@caching; end
+    def self.caching?; @@caching; end
 
     def self.formatter=(formatter); @@formatter = formatter; end
     def self.formatter; @@formatter; end
