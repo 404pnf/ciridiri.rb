@@ -1,20 +1,6 @@
-require 'rubygems'
-require 'test/unit'
-require 'lib/ciridiri/page'
-begin; require 'turn'; rescue LoadError; end
-
-Ciridiri::Page.content_dir = File.join(File.dirname(__FILE__), 'pages')
-Ciridiri::Page.caching = false
+require 'test_helper'
 
 class PageTest < Test::Unit::TestCase
-  include Ciridiri
-
-  def teardown
-    #recreate an empty content directory
-    FileUtils.rm_rf(Page.content_dir)
-    FileUtils.mkdir(Page.content_dir)
-  end
-
   def test_it_should_create_correct_page
     @page = page_stub
     assert_not_nil @page.contents
@@ -109,11 +95,6 @@ class PageTest < Test::Unit::TestCase
     ensure
       Page.caching = false
     end
-  end
-
-  protected
-  def page_stub(title = 'index', body = "##awesome title\n hello, everyone!")
-    Page.new(title, body)
   end
 
 end
