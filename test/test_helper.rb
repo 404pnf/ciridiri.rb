@@ -1,5 +1,6 @@
 require 'rubygems'
 require 'test/unit'
+require 'contest'
 require 'lib/ciridiri/page'
 begin; require 'turn'; rescue LoadError; end
 
@@ -8,6 +9,10 @@ Ciridiri::Page.caching = false
 
 class Test::Unit::TestCase
   include Ciridiri
+
+  class << self
+    alias_method :it, :test
+  end
 
   def teardown
     #recreate an empty content directory

@@ -12,12 +12,12 @@ class CiridiriTest < Test::Unit::TestCase
     Sinatra::Application
   end
 
-  def test_it_should_redirect_from_root_to_index
+  it "should redirect from root to index" do
     get '/'
     assert_redirect('/index.html')
   end
 
-  def test_it_should_get_existent_page
+  it "should get existent page" do
     page = page_stub
     page.save
 
@@ -26,18 +26,18 @@ class CiridiriTest < Test::Unit::TestCase
     assert last_response.body.include?(page.title)
   end
 
-  def test_it_should_redirect_to_edit_form_if_page_not_found
+  it "should redirect to edit form if page not found" do
     get "/nonexistent.html"
     assert_redirect("/nonexistent.html.e")
   end
 
-  def test_it_should_show_an_empty_edit_form
+  it "should show an empty edit form" do
     get "/nonexistent.html.e"
     assert last_response.ok?
     assert last_response.body.include?("form")
   end
 
-  def test_it_should_create_a_new_page
+  it "should create a new page" do
     post "/foo.html", :contents => 'fut-fut-fut, freeeeestylo'
     assert_redirect("/foo.html")
     follow_redirect!
@@ -45,7 +45,7 @@ class CiridiriTest < Test::Unit::TestCase
     assert last_response.body.include?('freeeeestylo')
   end
 
-  def test_it_should_edit_an_existent_page
+  it "should edit an existent page" do
     page = page_stub
     page.save
 
@@ -55,7 +55,7 @@ class CiridiriTest < Test::Unit::TestCase
     assert last_response.body.include?(page.contents)
   end
 
-  def test_it_should_update_an_existent_page
+  it "should update an existent page" do
     page = page_stub
     page.save
 
@@ -66,7 +66,7 @@ class CiridiriTest < Test::Unit::TestCase
     assert last_response.body.include?("new contents")
   end
 
-  def test_it_should_provide_the_edit_link
+  it "should provide the edit link" do
     page = page_stub
     page.save
 
@@ -81,5 +81,4 @@ class CiridiriTest < Test::Unit::TestCase
     assert last_response.redirect?
     assert_equal last_response.headers['Location'], uri
   end
-
 end
