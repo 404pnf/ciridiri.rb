@@ -6,7 +6,7 @@ module Ciridiri
     extend Ciridiri::Finders, Ciridiri::Paths
     ###Constants block
 
-    # A regular expression for markdown-like headers (`#`, `##`, `###`, `=====`, `----`)
+    # A regular expression for markdown like headers (`#`, `##`, `###`, `=====`, `----`)
     MD_TITLE = Regexp.new("(^\#{1,3}\\s*?([^#].*?)#*$)|(^ {0,3}(\\S.*?)\\n(?:=|-)+(?=\\n+|\\Z))", Regexp::MULTILINE)
     # HTML headers (`<h1-3>`)
     HTML_TITLE = Regexp.new("^<h[1-3](.*)?>(.*)+</h[1-3]>")
@@ -17,7 +17,7 @@ module Ciridiri
 
     ###Default values for all options
 
-    # Where all pages should be stored on a file system
+    # Where pages should be stored on a file system
     @@content_dir = '.'
     # Should we create backups (`filename.1278278364.text`, where `1278278364` -- current timestamp) or not.
     # Useful when you are not going to place `@@content_dir` under version control
@@ -27,7 +27,7 @@ module Ciridiri
 
     ####Formatter block
 
-    # You could use any formatter. For example:
+    # You can use any formatter. For example:
     #
     # Bluecloth:
     #     require 'bluecloth'
