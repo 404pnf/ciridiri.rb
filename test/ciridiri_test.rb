@@ -1,16 +1,12 @@
 require 'test_helper'
-require 'rack/test'
-require 'sinatra'
 require 'ciridiri'
-
-set :environment, :test
-set :root, File.expand_path("../", File.dirname(__FILE__))
+require 'rack/test'
 
 class CiridiriTest < Test::Unit::TestCase
   include Rack::Test::Methods
   describe "Ciridiri web-app" do
     def app
-      Sinatra::Application
+      Ciridiri::Application
     end
 
     should "redirect from root to index" do

@@ -1,42 +1,49 @@
 require 'rubygems'
-require 'sinatra'
+require 'sinatra/base'
 require 'lib/ciridiri/page'
 
-include Ciridiri
+class Ciridiri::Application < Sinatra::Base
+  include Ciridiri
+  configure do
+    set :app_file, __FILE__
+    enable :static
+    enable :logging if development?
 
-Page.content_dir = File.join(Sinatra::Application.root, "pages", Sinatra::Application.environment.to_s)
+    Page.caching = false if development? || test?
+    Page.content_dir = File.join(self.root, "pages", self.environment.to_s)
+  end
 
-configure :development do
-  Page.caching = false
-end
+  helpers do
+    include Rack::Utils
+    alias_method :h, :escape_html
+  end
 
+  get '/' do
+    redirect '/index.html'
+  end
 
-helpers do
-  include Rack::Utils
-  alias_method :h, :escape_html
-end
+  get '*.html' do
+    uri = params[:splat].first
+    if @page = Page.find_by_uri(uri)
+      erb :show
+    else
+      redirect "#{uri}.html.e"
+    end
+  end
 
-get '/' do
-  redirect '/index.html'
-end
+  get '*.html.e' do
+    @page = Page.find_by_uri_or_empty(params[:splat].first)
+    erb :edit
+  end
 
-get '*.html' do
-  uri = params[:splat].first
-  if @page = Page.find_by_uri(uri)
-    erb :show
-  else
-    redirect "#{uri}.html.e"
+  post '*.html' do
+    @page = Page.find_by_uri_or_empty(params[:splat].first)
+    @page.contents = params[:contents]
+    @page.save
+    redirect "#{@page.uri}.html"
   end
 end
 
-get '*.html.e' do
-  @page = Page.find_by_uri_or_empty(params[:splat].first)
-  erb :edit
-end
-
-post '*.html' do
-  @page = Page.find_by_uri_or_empty(params[:splat].first)
-  @page.contents = params[:contents]
-  @page.save
-  redirect "#{@page.uri}.html"
+if __FILE__ == $0
+  Ciridiri::Application.run!
 end

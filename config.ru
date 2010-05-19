@@ -9,4 +9,4 @@ set :logging, false
 
 Ciridiri::Page.formatter = lambda {|text| RDiscount.new(text).to_html}
 
-run Sinatra::Application
+run Ciridiri::Application
