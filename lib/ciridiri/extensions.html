@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <title>extensions.rb</title>
+  <link rel="stylesheet" href="http://jashkenas.github.com/docco/resources/docco.css">
+</head>
+<body>
+<div id='container'>
+  <div id="background"></div>
+  <div id="jump_to">
+    Jump To &hellip;
+    <div id="jump_wrapper">
+      <div id="jump_page">
+        <a class="source" href="./extensions.html">extensions.rb</a>
+        <a class="source" href="./finders.html">finders.rb</a>
+        <a class="source" href="./page.html">page.rb</a>
+        <a class="source" href="./paths.html">paths.rb</a>
+        </div>
+    </div>
+  </div>
+  <table cellspacing=0 cellpadding=0>
+  <thead>
+    <tr>
+      <th class=docs><h1>extensions.rb</h1></th>
+      <th class=code></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr id='section-1'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-1">#</a>
+        </div>
+        <p> Extends the class object with class and instance accessors for class attributes,
+ just like the native attr* accessors for instance attributes.</p>
+
+<pre><code>class Person
+  cattr_accessor :hair_colors
+end
+
+Person.hair_colors = [:brown, :black, :blonde, :red]
+</code></pre>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="k">class</span> <span class="nc">Class</span>
+  <span class="k">def</span> <span class="nf">cattr_reader</span><span class="p">(</span><span class="o">*</span><span class="n">syms</span><span class="p">)</span>
+    <span class="n">syms</span><span class="o">.</span><span class="n">flatten</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">sym</span><span class="o">|</span>
+      <span class="k">next</span> <span class="k">if</span> <span class="n">sym</span><span class="o">.</span><span class="n">is_a?</span><span class="p">(</span><span class="no">Hash</span><span class="p">)</span>
+      <span class="nb">class_eval</span><span class="p">(</span><span class="o">&lt;&lt;-</span><span class="no">EOS</span><span class="p">,</span> <span class="bp">__FILE__</span><span class="p">,</span> <span class="bp">__LINE__</span><span class="p">)</span>
+<span class="sh">        unless defined? @@#{sym}  # unless defined? @@hair_colors</span>
+<span class="sh">          @@#{sym} = nil          #   @@hair_colors = nil</span>
+<span class="sh">        end                       # end</span>
+
+<span class="sh"># DIVIDER</span>
+
+<span class="sh">        def self.#{sym}           # def self.hair_colors</span>
+<span class="sh">          @@#{sym}                #   @@hair_colors</span>
+<span class="sh">        end                       # end</span>
+
+<span class="sh"># DIVIDER</span>
+
+<span class="sh">        def self.#{sym}?          # def self.hair_colors?</span>
+<span class="sh">          @@#{sym}                #   @@hair_colors</span>
+<span class="sh">        end                       # end</span>
+<span class="no">      EOS</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">cattr_writer</span><span class="p">(</span><span class="o">*</span><span class="n">syms</span><span class="p">)</span>
+    <span class="n">syms</span><span class="o">.</span><span class="n">flatten</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">sym</span><span class="o">|</span>
+      <span class="nb">class_eval</span><span class="p">(</span><span class="o">&lt;&lt;-</span><span class="no">EOS</span><span class="p">,</span> <span class="bp">__FILE__</span><span class="p">,</span> <span class="bp">__LINE__</span><span class="p">)</span>
+<span class="sh">        unless defined? @@#{sym}                       # unless defined? @@hair_colors</span>
+<span class="sh">          @@#{sym} = nil                               #   @@hair_colors = nil</span>
+<span class="sh">        end                                            # end</span>
+
+<span class="sh"># DIVIDER</span>
+
+<span class="sh">        def self.#{sym}=(obj)                          # def self.hair_colors=(obj)</span>
+<span class="sh">          @@#{sym} = obj                               #   @@hair_colors = obj</span>
+<span class="sh">        end                                            # end</span>
+<span class="no">      EOS</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">cattr_accessor</span><span class="p">(</span><span class="o">*</span><span class="n">syms</span><span class="p">)</span>
+    <span class="n">cattr_reader</span><span class="p">(</span><span class="o">*</span><span class="n">syms</span><span class="p">)</span>
+    <span class="n">cattr_writer</span><span class="p">(</span><span class="o">*</span><span class="n">syms</span><span class="p">)</span>
+  <span class="k">end</span>
+<span class="k">end</span></pre></div>
+      </td>
+    </tr>
+    </table>
+</div>
+</body>
+</html>

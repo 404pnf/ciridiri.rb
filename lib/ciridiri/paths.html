@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <title>paths.rb</title>
+  <link rel="stylesheet" href="http://jashkenas.github.com/docco/resources/docco.css">
+</head>
+<body>
+<div id='container'>
+  <div id="background"></div>
+  <div id="jump_to">
+    Jump To &hellip;
+    <div id="jump_wrapper">
+      <div id="jump_page">
+        <a class="source" href="./extensions.html">extensions.rb</a>
+        <a class="source" href="./finders.html">finders.rb</a>
+        <a class="source" href="./page.html">page.rb</a>
+        <a class="source" href="./paths.html">paths.rb</a>
+        </div>
+    </div>
+  </div>
+  <table cellspacing=0 cellpadding=0>
+  <thead>
+    <tr>
+      <th class=docs><h1>paths.rb</h1></th>
+      <th class=code></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr id='section-1'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-1">#</a>
+        </div>
+        
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="k">module</span> <span class="nn">Ciridiri</span>
+  <span class="k">module</span> <span class="nn">Paths</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-2'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-2">#</a>
+        </div>
+        <p> Convert <code>uri</code> to <code>path</code> in a file system including <code>content_dir</code> and a source file extension
+ <code>/team/pro/chuck-norris</code> &ndash;> <code>content_dir/team/pro/chuck-norris.text</code></p>
+
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="k">def</span> <span class="nf">path_from_uri</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span>
+      <span class="n">path</span> <span class="o">=</span> <span class="n">uri</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
+      <span class="n">filename</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">pop</span>
+      <span class="no">File</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">content_dir</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">filename</span><span class="si">}#{</span><span class="no">Page</span><span class="o">::</span><span class="no">SOURCE_FILE_EXT</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">end</span>
+
+  <span class="k">end</span>
+<span class="k">end</span></pre></div>
+      </td>
+    </tr>
+    </table>
+</div>
+</body>
+</html>
