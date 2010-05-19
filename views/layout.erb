@@ -7,6 +7,9 @@
   <% if @page && !(request.fullpath =~ /\.e$/) %>
   <link rel="alternate" id="edit-link" type="application/x-wiki" title="Edit current page" href="<%= @page.uri %>.html.e" />
   <% end %>
+  <% if request.fullpath =~ /\.e$/ %>
+  <meta name="robots" content="noindex" />
+  <% end %>
   <script src="/js/application.js"></script>
   <title>
     <%= h @page.title + " / " if @page && @page.title%>
