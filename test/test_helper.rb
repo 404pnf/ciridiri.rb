@@ -1,7 +1,7 @@
 require 'rubygems'
 require 'test/unit'
 require 'contest'
-require 'lib/ciridiri/page'
+require 'lib/ciridiri'
 begin; require 'turn'; rescue LoadError; end
 
 Ciridiri::Page.content_dir = File.join(File.dirname(__FILE__), 'pages')

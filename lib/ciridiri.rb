@@ -1,11 +1,14 @@
 require 'rubygems'
 require 'sinatra/base'
-require 'lib/ciridiri/page'
+
+$:.unshift(File.dirname(__FILE__))
+require 'ciridiri/page'
 
 class Ciridiri::Application < Sinatra::Base
   include Ciridiri
   configure do
     set :app_file, __FILE__
+    set :root, File.expand_path('..', File.dirname(__FILE__))
     enable :static
     enable :logging if development?
 
@@ -42,8 +45,4 @@ class Ciridiri::Application < Sinatra::Base
     @page.save
     redirect "#{@page.uri}.html"
   end
-end
-
-if __FILE__ == $0
-  Ciridiri::Application.run!
 end

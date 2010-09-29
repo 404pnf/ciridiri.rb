@@ -1,5 +1,4 @@
 require 'test_helper'
-require 'ciridiri'
 require 'rack/test'
 
 class CiridiriTest < Test::Unit::TestCase

@@ -11,7 +11,7 @@ __ciridiri.rb__ is a Ruby+Sinatra port of [ciridiri](http://vast.github.com/ciri
 
     git clone git://github.com/vast/ciridiri.rb.git
     cd ciridiri.rb
-    ruby ciridiri.rb
+    rackup
 
 And point your browser to `http://localhost:4567/`.
 
