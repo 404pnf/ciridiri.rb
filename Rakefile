@@ -7,8 +7,8 @@ task :default => :test
 begin
   require 'jeweler'
   Jeweler::Tasks.new do |gemspec|
-    gemspec.name = "ciridiri.rb"
-    gemspec.version = "0.8"
+    gemspec.name = "ciridiri"
+    gemspec.version = "0.8.1"
     gemspec.summary = gemspec.description = "Dead simple wiki engine"
     gemspec.email = "vasily@polovnyov.ru"
     gemspec.homepage = "http://vast.github.com/ciridiri.rb"
