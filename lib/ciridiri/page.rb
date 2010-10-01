@@ -111,7 +111,12 @@ module Ciridiri
     # Tiny `attr_writer` for `@@content_dir` which creates the content directory if it doesn't exist
     def self.content_dir=(dir)
       @@content_dir = dir
-      FileUtils.mkdir_p(@@content_dir) if !File.exists?(@@content_dir)
+      begin
+        FileUtils.mkdir_p(@@content_dir) if !File.exists?(@@content_dir)
+      rescue Errno::EACCES
+        # Can't create content dir, using current working dir
+        @@content_dir = "."
+      end
     end
 
     ###Protected methods
