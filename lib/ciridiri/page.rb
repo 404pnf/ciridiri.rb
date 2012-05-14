@@ -9,7 +9,7 @@ module Ciridiri
     # A regular expression for markdown like headers (`#`, `##`, `###`, `=====`, `----`)
     MD_TITLE = Regexp.new("(^\#{1,3}\\s*?([^#].*?)#*$)|(^ {0,3}(\\S.*?)\\n(?:=|-)+(?=\\n+|\\Z))", Regexp::MULTILINE)
     # HTML headers (`<h1-3>`)
-    HTML_TITLE = Regexp.new("^<h[1-3](.*)?>(.*)+</h[1-3]>")
+    HTML_TITLE = Regexp.new("^<h[1-3](.*)?>((.*)+)</h[1-3]>")
 
     # File extensions
     SOURCE_FILE_EXT = ".text".freeze
@@ -125,9 +125,9 @@ module Ciridiri
     # Find the title in contents (html or markdown variant).
     # Return `""` if nothing found.
     def self.find_title(contents="")
-      if contents.detect {|s| s.match(MD_TITLE)}
+      if contents.match(MD_TITLE)
         $2.strip || $4.strip
-      elsif contents.detect {|s| s.match(HTML_TITLE)}
+      elsif contents.match(HTML_TITLE)
         $2.strip
       else
         ""

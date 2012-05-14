@@ -75,7 +75,7 @@ class CiridiriTest < Test::Unit::TestCase
     protected
     def assert_redirect(uri)
       assert last_response.redirect?
-      assert_equal last_response.headers['Location'], uri
+      assert last_response.headers['Location'] =~ Regexp.new(uri + '$')
     end
   end
 end
