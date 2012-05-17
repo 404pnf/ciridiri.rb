@@ -1,5 +1,6 @@
-$LOAD_PATH.unshift(File.dirname(__FILE__)) unless $LOAD_PATH.include?(File.dirname(__FILE__))
-%w[fileutils finders paths extensions].each {|r| require r}
+require 'fileutils'
+dir = File.dirname(__FILE__)
+%w[finders paths extensions].each {|r| require File.join(dir, r)}
 
 module Ciridiri
   class Page
