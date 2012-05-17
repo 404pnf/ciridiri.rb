@@ -3,11 +3,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{ciridiri}
-  s.version = "0.8.1"
+  s.version = "0.8.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Vasily Polovnyov"]
-  s.date = %q{2010-10-01}
+  s.date = %q{2012-05-17}
   s.description = %q{Dead simple wiki engine}
   s.email = %q{vasily@polovnyov.ru}
   s.extra_rdoc_files = [
