@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-  <title>finders.rb</title>
+  <title>README.md</title>
   <link rel="stylesheet" href="http://vast.github.com/rokko/assets/v0.1.2/docco.css" />
          <link rel="stylesheet" href="http://vast.github.com/rokko/assets/v0.1.2/highlight.css" />
   <script src="http://vast.github.com/rokko/assets/v0.1.2/highlight.pack.js"></script>
@@ -16,19 +16,19 @@
     Jump To &hellip;
     <div id="jump_wrapper">
       <div id="jump_page">
-          <a class="source" href="../../index.html">index</a>
-          <a class="source" href="../ciridiri.html">ciridiri.rb</a>
-          <a class="source" href="./extensions.html">extensions.rb</a>
-          <a class="source" href="./finders.html">finders.rb</a>
-          <a class="source" href="./page.html">page.rb</a>
-          <a class="source" href="./paths.html">paths.rb</a>
+          <a class="source" href="./index.html">index</a>
+          <a class="source" href="./README.html">README.md</a>
+          <a class="source" href="lib/ciridiri/extensions.html">extensions.rb</a>
+          <a class="source" href="lib/ciridiri/finders.html">finders.rb</a>
+          <a class="source" href="lib/ciridiri/page.html">page.rb</a>
+          <a class="source" href="lib/ciridiri/paths.html">paths.rb</a>
       </div>
     </div>
   </div>
   <table cellspacing="0" cellpadding="0">
   <thead>
     <tr>
-      <th class="docs"><h1>finders.rb</h1></th>
+      <th class="docs"><h1>README.md</h1></th>
       <th class="code"></th>
     </tr>
   </thead>
@@ -38,11 +38,13 @@
         <div class="pilwrap">
           <a class="pilcrow" href="#section-1">&#182;</a>
         </div>
-        
+        <p>ciridiri.rb</p>
       </td>
       <td class="code">
-        <pre class="ruby"><code>module Ciridiri
-  module Finders</code></pre>
+        <pre class="ruby"><code>
+__ciridiri.rb__ is a Ruby+Sinatra port of [ciridiri](http://vast.github.com/ciridiri/),
+  dead simple wiki engine.
+</code></pre>
       </td>
     </tr>
     <tr id="section-2">
@@ -50,14 +52,11 @@
         <div class="pilwrap">
           <a class="pilcrow" href="#section-2">&#182;</a>
         </div>
-        <p>Convert <code>uri</code> to a path and return a new <code>Page</code> instance if the corresponding file exists.
-Return nil otherwise</p>
+        <h1>Requirements</h1>
       </td>
       <td class="code">
-        <pre class="ruby"><code>    def find_by_uri(uri)
-      content_path = path_from_uri(uri)
-      File.exists?(content_path) ? Page.new(uri, File.open(content_path).read) : nil
-    end
+        <pre class="ruby"><code>
+* [sinatra][]
 </code></pre>
       </td>
     </tr>
@@ -66,12 +65,15 @@ Return nil otherwise</p>
         <div class="pilwrap">
           <a class="pilcrow" href="#section-3">&#182;</a>
         </div>
-        <p>Return a new empty <code>Page</code> instance if the corresponding file doesn&rsquo;t exists</p>
+        <h1>Installation</h1>
       </td>
       <td class="code">
-        <pre class="ruby"><code>    def find_by_uri_or_empty(uri)
-      find_by_uri(uri) or Page.new(uri, '')
-    end
+        <pre class="ruby"><code>
+    git clone git://github.com/vast/ciridiri.rb.git
+    cd ciridiri.rb
+    rackup
+
+And point your browser to `http://localhost:4567/`.
 </code></pre>
       </td>
     </tr>
@@ -80,19 +82,14 @@ Return nil otherwise</p>
         <div class="pilwrap">
           <a class="pilcrow" href="#section-4">&#182;</a>
         </div>
-        <p>Return an array of all <code>Page</code>s excluding backups</p>
+        <h1>Usage</h1>
 
       </td>
       <td class="code">
-        <pre class="ruby"><code>    def all
-      Dir.chdir(content_dir) do
-        files = Dir.glob(File.join(&quot;**&quot;, &quot;*#{SOURCE_FILE_EXT}&quot;)).delete_if {|p| p =~ Regexp.new(&quot;\\.[0-9]+\\#{SOURCE_FILE_EXT}$&quot;)}
-        files.collect {|f| Page.new(uri_from_path(f), File.open(f, 'r') {|b| b.read})}
-      end
-    end
+        <pre class="ruby"><code>Create new pages through accessing `http://localhost:4567/path/to/new/page.html`.
+Edit existent page through accessing `http://localhost:4567/existent/page.html.e` or just press `ctrl-shift-e`.
 
-  end
-end</code></pre>
+[sinatra]: http://sinatrarb.com/</code></pre>
       </td>
     </tr>
   </tbody>

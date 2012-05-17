@@ -1,65 +1,72 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
   <title>paths.rb</title>
-  <link rel="stylesheet" href="http://jashkenas.github.com/docco/resources/docco.css">
+  <link rel="stylesheet" href="http://vast.github.com/rokko/assets/v0.1.2/docco.css" />
+         <link rel="stylesheet" href="http://vast.github.com/rokko/assets/v0.1.2/highlight.css" />
+  <script src="http://vast.github.com/rokko/assets/v0.1.2/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
 </head>
 <body>
-<div id='container'>
+<div id="container">
   <div id="background"></div>
   <div id="jump_to">
     Jump To &hellip;
     <div id="jump_wrapper">
       <div id="jump_page">
-        <a class="source" href="./extensions.html">extensions.rb</a>
-        <a class="source" href="./finders.html">finders.rb</a>
-        <a class="source" href="./page.html">page.rb</a>
-        <a class="source" href="./paths.html">paths.rb</a>
-        </div>
+          <a class="source" href="../../index.html">index</a>
+          <a class="source" href="../ciridiri.html">ciridiri.rb</a>
+          <a class="source" href="./extensions.html">extensions.rb</a>
+          <a class="source" href="./finders.html">finders.rb</a>
+          <a class="source" href="./page.html">page.rb</a>
+          <a class="source" href="./paths.html">paths.rb</a>
+      </div>
     </div>
   </div>
-  <table cellspacing=0 cellpadding=0>
+  <table cellspacing="0" cellpadding="0">
   <thead>
     <tr>
-      <th class=docs><h1>paths.rb</h1></th>
-      <th class=code></th>
+      <th class="docs"><h1>paths.rb</h1></th>
+      <th class="code"></th>
     </tr>
   </thead>
   <tbody>
-    <tr id='section-1'>
-      <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-1">#</a>
+    <tr id="section-1">
+      <td class="docs">
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-1">&#182;</a>
         </div>
         
       </td>
-      <td class=code>
-        <div class='highlight'><pre><span class="k">module</span> <span class="nn">Ciridiri</span>
-  <span class="k">module</span> <span class="nn">Paths</span></pre></div>
+      <td class="code">
+        <pre class="ruby"><code>module Ciridiri
+  module Paths</code></pre>
       </td>
     </tr>
-    <tr id='section-2'>
-      <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-2">#</a>
+    <tr id="section-2">
+      <td class="docs">
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-2">&#182;</a>
         </div>
-        <p> Convert <code>uri</code> to <code>path</code> in a file system including <code>content_dir</code> and a source file extension
- <code>/team/pro/chuck-norris</code> &ndash;> <code>content_dir/team/pro/chuck-norris.text</code></p>
+        <p>Convert <code>uri</code> to <code>path</code> in a file system including <code>content_dir</code> and a source file extension
+<code>/team/pro/chuck-norris</code> &ndash;> <code>content_dir/team/pro/chuck-norris.text</code></p>
 
       </td>
-      <td class=code>
-        <div class='highlight'><pre>    <span class="k">def</span> <span class="nf">path_from_uri</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span>
-      <span class="n">path</span> <span class="o">=</span> <span class="n">uri</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
-      <span class="n">filename</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">pop</span>
-      <span class="no">File</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">content_dir</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">filename</span><span class="si">}#{</span><span class="no">Page</span><span class="o">::</span><span class="no">SOURCE_FILE_EXT</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="k">end</span>
+      <td class="code">
+        <pre class="ruby"><code>    def path_from_uri(uri)
+      path = uri.split(&quot;/&quot;)
+      filename = path.pop
+      File.join(content_dir, path, &quot;#{filename}#{Page::SOURCE_FILE_EXT}&quot;)
+    end
 
-  <span class="k">end</span>
-<span class="k">end</span></pre></div>
+  end
+end</code></pre>
       </td>
     </tr>
-    </table>
+  </tbody>
+  </table>
 </div>
 </body>
 </html>

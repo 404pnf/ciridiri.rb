@@ -1,400 +1,438 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
   <title>page.rb</title>
-  <link rel="stylesheet" href="http://jashkenas.github.com/docco/resources/docco.css">
+  <link rel="stylesheet" href="http://vast.github.com/rokko/assets/v0.1.2/docco.css" />
+         <link rel="stylesheet" href="http://vast.github.com/rokko/assets/v0.1.2/highlight.css" />
+  <script src="http://vast.github.com/rokko/assets/v0.1.2/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
 </head>
 <body>
-<div id='container'>
+<div id="container">
   <div id="background"></div>
   <div id="jump_to">
     Jump To &hellip;
     <div id="jump_wrapper">
       <div id="jump_page">
-        <a class="source" href="./extensions.html">extensions.rb</a>
-        <a class="source" href="./finders.html">finders.rb</a>
-        <a class="source" href="./page.html">page.rb</a>
-        <a class="source" href="./paths.html">paths.rb</a>
-        </div>
+          <a class="source" href="../../index.html">index</a>
+          <a class="source" href="../ciridiri.html">ciridiri.rb</a>
+          <a class="source" href="./extensions.html">extensions.rb</a>
+          <a class="source" href="./finders.html">finders.rb</a>
+          <a class="source" href="./page.html">page.rb</a>
+          <a class="source" href="./paths.html">paths.rb</a>
+      </div>
     </div>
   </div>
-  <table cellspacing=0 cellpadding=0>
+  <table cellspacing="0" cellpadding="0">
   <thead>
     <tr>
-      <th class=docs><h1>page.rb</h1></th>
-      <th class=code></th>
+      <th class="docs"><h1>page.rb</h1></th>
+      <th class="code"></th>
     </tr>
   </thead>
   <tbody>
-    <tr id='section-1'>
-      <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-1">#</a>
+    <tr id="section-1">
+      <td class="docs">
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-1">&#182;</a>
         </div>
         
       </td>
-      <td class=code>
-        <div class='highlight'><pre><span class="vg">$LOAD_PATH</span><span class="o">.</span><span class="n">unshift</span><span class="p">(</span><span class="no">File</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="bp">__FILE__</span><span class="p">))</span> <span class="k">unless</span> <span class="vg">$LOAD_PATH</span><span class="o">.</span><span class="n">include?</span><span class="p">(</span><span class="no">File</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="bp">__FILE__</span><span class="p">))</span>
-<span class="sx">%w[fileutils finders paths extensions]</span><span class="o">.</span><span class="n">each</span> <span class="p">{</span><span class="o">|</span><span class="n">r</span><span class="o">|</span> <span class="nb">require</span> <span class="n">r</span><span class="p">}</span>
+      <td class="code">
+        <pre class="ruby"><code>require 'fileutils'
+dir = File.dirname(__FILE__)
+%w[finders paths extensions].each {|r| require File.join(dir, r)}
 
-<span class="k">module</span> <span class="nn">Ciridiri</span>
-  <span class="k">class</span> <span class="nc">Page</span>
-    <span class="kp">extend</span> <span class="no">Ciridiri</span><span class="o">::</span><span class="no">Finders</span><span class="p">,</span> <span class="no">Ciridiri</span><span class="o">::</span><span class="no">Paths</span></pre></div>
+module Ciridiri
+  class Page
+    extend Ciridiri::Finders, Ciridiri::Paths</code></pre>
       </td>
     </tr>
-    <tr id='section-2'>
-      <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-2">#</a>
+    <tr id="section-2">
+      <td class="docs">
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-2">&#182;</a>
         </div>
         <h2>Constants block</h2>
       </td>
-      <td class=code>
-        <div class='highlight'><pre></pre></div>
+      <td class="code">
+        <pre class="ruby"><code></code></pre>
       </td>
     </tr>
-    <tr id='section-3'>
-      <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-3">#</a>
+    <tr id="section-3">
+      <td class="docs">
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-3">&#182;</a>
         </div>
-        <p> A regular expression for markdown like headers (<code>#</code>, <code>##</code>, <code>###</code>, <code>=====</code>, <code>----</code>)</p>
+        <p>A regular expression for markdown like headers (<code>#</code>, <code>##</code>, <code>###</code>, <code>=====</code>, <code>----</code>)</p>
       </td>
-      <td class=code>
-        <div class='highlight'><pre>    <span class="no">MD_TITLE</span> <span class="o">=</span> <span class="no">Regexp</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;(^</span><span class="se">\#</span><span class="s2">{1,3}</span><span class="se">\\</span><span class="s2">s*?([^#].*?)#*$)|(^ {0,3}(</span><span class="se">\\</span><span class="s2">S.*?)</span><span class="se">\\</span><span class="s2">n(?:=|-)+(?=</span><span class="se">\\</span><span class="s2">n+|</span><span class="se">\\</span><span class="s2">Z))&quot;</span><span class="p">,</span> <span class="no">Regexp</span><span class="o">::</span><span class="no">MULTILINE</span><span class="p">)</span></pre></div>
+      <td class="code">
+        <pre class="ruby"><code>    MD_TITLE = Regexp.new(&quot;(^\#{1,3}\\s*?([^#].*?)#*$)|(^ {0,3}(\\S.*?)\\n(?:=|-)+(?=\\n+|\\Z))&quot;, Regexp::MULTILINE)</code></pre>
       </td>
     </tr>
-    <tr id='section-4'>
-      <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-4">#</a>
+    <tr id="section-4">
+      <td class="docs">
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-4">&#182;</a>
         </div>
-        <p> HTML headers (<code>&lt;h1-3&gt;</code>)</p>
+        <p>HTML headers (<code>&lt;h1-3&gt;</code>)</p>
       </td>
-      <td class=code>
-        <div class='highlight'><pre>    <span class="no">HTML_TITLE</span> <span class="o">=</span> <span class="no">Regexp</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;^&lt;h[1-3](.*)?&gt;(.*)+&lt;/h[1-3]&gt;&quot;</span><span class="p">)</span></pre></div>
+      <td class="code">
+        <pre class="ruby"><code>    HTML_TITLE = Regexp.new(&quot;^&lt;h[1-3](.*)?&gt;((.*)+)&lt;/h[1-3]&gt;&quot;)
+</code></pre>
       </td>
     </tr>
-    <tr id='section-5'>
-      <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-5">#</a>
+    <tr id="section-5">
+      <td class="docs">
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-5">&#182;</a>
         </div>
-        <p> File extensions</p>
+        <p>File extensions</p>
       </td>
-      <td class=code>
-        <div class='highlight'><pre>    <span class="no">SOURCE_FILE_EXT</span> <span class="o">=</span> <span class="s2">&quot;.text&quot;</span><span class="o">.</span><span class="n">freeze</span>
-    <span class="no">CACHED_FILE_EXT</span> <span class="o">=</span> <span class="s2">&quot;.html&quot;</span><span class="o">.</span><span class="n">freeze</span></pre></div>
+      <td class="code">
+        <pre class="ruby"><code>    SOURCE_FILE_EXT = &quot;.text&quot;.freeze
+    CACHED_FILE_EXT = &quot;.html&quot;.freeze
+</code></pre>
       </td>
     </tr>
-    <tr id='section-6'>
-      <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-6">#</a>
+    <tr id="section-6">
+      <td class="docs">
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-6">&#182;</a>
         </div>
         <h2>Default values for all options</h2>
       </td>
-      <td class=code>
-        <div class='highlight'><pre></pre></div>
+      <td class="code">
+        <pre class="ruby"><code></code></pre>
       </td>
     </tr>
-    <tr id='section-7'>
-      <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-7">#</a>
+    <tr id="section-7">
+      <td class="docs">
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-7">&#182;</a>
         </div>
-        <p> Where pages should be stored on a file system</p>
+        <p>Where pages should be stored on a file system</p>
       </td>
-      <td class=code>
-        <div class='highlight'><pre>    <span class="vc">@@content_dir</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span></pre></div>
+      <td class="code">
+        <pre class="ruby"><code>    @@content_dir = '.'</code></pre>
       </td>
     </tr>
-    <tr id='section-8'>
-      <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-8">#</a>
+    <tr id="section-8">
+      <td class="docs">
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-8">&#182;</a>
         </div>
-        <p> Should we create backups (<code>filename.1278278364.text</code>, where <code>1278278364</code> &mdash; current timestamp) or not.
- Useful when you are not going to place <code>@@content_dir</code> under version control</p>
+        <p>Should we create backups (<code>filename.1278278364.text</code>, where <code>1278278364</code> &mdash; current timestamp) or not.
+Useful when you are not going to place <code>@@content_dir</code> under version control</p>
       </td>
-      <td class=code>
-        <div class='highlight'><pre>    <span class="vc">@@backups</span> <span class="o">=</span> <span class="kp">false</span></pre></div>
+      <td class="code">
+        <pre class="ruby"><code>    @@backups = false</code></pre>
       </td>
     </tr>
-    <tr id='section-9'>
-      <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-9">#</a>
+    <tr id="section-9">
+      <td class="docs">
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-9">&#182;</a>
         </div>
-        <p> Page fragments (formatted file <code>contents</code>) caching</p>
+        <p>Page fragments (formatted file <code>contents</code>) caching</p>
       </td>
-      <td class=code>
-        <div class='highlight'><pre>    <span class="vc">@@caching</span> <span class="o">=</span> <span class="kp">true</span></pre></div>
+      <td class="code">
+        <pre class="ruby"><code>    @@caching = true
+</code></pre>
       </td>
     </tr>
-    <tr id='section-10'>
-      <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-10">#</a>
+    <tr id="section-10">
+      <td class="docs">
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-10">&#182;</a>
         </div>
         <h3>Formatter block</h3>
       </td>
-      <td class=code>
-        <div class='highlight'><pre></pre></div>
+      <td class="code">
+        <pre class="ruby"><code></code></pre>
       </td>
     </tr>
-    <tr id='section-11'>
-      <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-11">#</a>
+    <tr id="section-11">
+      <td class="docs">
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-11">&#182;</a>
         </div>
-        <p> You can use any formatter. For example:</p>
+        <p>You can use any formatter. For example:</p>
 
-<p> Bluecloth:</p>
+<p>Bluecloth:</p>
 
-<pre><code> require 'bluecloth'
- Page.formatter = lambda {|text| Bluecloth.new(text).to_html)}
+<pre><code>require 'bluecloth'
+Page.formatter = lambda {|text| Bluecloth.new(text).to_html)}
 </code></pre>
 
-<p> RDiscount:</p>
+<p>RDiscount:</p>
 
-<pre><code> require 'rdiscount'
- Page.formatter = lambda {|text| RDiscount.new(text).to_html)}
+<pre><code>require 'rdiscount'
+Page.formatter = lambda {|text| RDiscount.new(text).to_html)}
 </code></pre>
 
-<p> Rutils with RDiscount:</p>
+<p>Rutils with RDiscount:</p>
 
-<pre><code> require 'rutils'
- require 'rdiscount'
- Page.formatter = lambda {|text| RuTils::Gilenson::Formatter.new(RDiscount.new(text).to_html).to_html}
+<pre><code>require 'rutils'
+require 'rdiscount'
+Page.formatter = lambda {|text| RuTils::Gilenson::Formatter.new(RDiscount.new(text).to_html).to_html}
 </code></pre>
 
-<p> HTML escaping:</p>
+<p>HTML escaping:</p>
 
-<pre><code> Page.formatter = {|text| "&lt;pre&gt;#{Rack::Utils.escape_html(text)}&lt;/pre&gt;"}
+<pre><code>Page.formatter = {|text| "&lt;pre&gt;#{Rack::Utils.escape_html(text)}&lt;/pre&gt;"}
 </code></pre>
       </td>
-      <td class=code>
-        <div class='highlight'><pre>    <span class="vc">@@formatter</span> <span class="o">=</span> <span class="nb">lambda</span> <span class="p">{</span><span class="o">|</span><span class="n">text</span><span class="o">|</span> <span class="n">text</span><span class="p">}</span></pre></div>
+      <td class="code">
+        <pre class="ruby"><code>    @@formatter = lambda {|text| text}
+</code></pre>
       </td>
     </tr>
-    <tr id='section-12'>
-      <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-12">#</a>
+    <tr id="section-12">
+      <td class="docs">
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-12">&#182;</a>
         </div>
-        <p> Define attr_reader/accessors</p>
+        <p>Define attr_reader/accessors</p>
       </td>
-      <td class=code>
-        <div class='highlight'><pre>    <span class="kp">attr_accessor</span> <span class="ss">:title</span><span class="p">,</span> <span class="ss">:contents</span>
-    <span class="kp">attr_reader</span> <span class="ss">:path</span><span class="p">,</span> <span class="ss">:uri</span></pre></div>
+      <td class="code">
+        <pre class="ruby"><code>    attr_accessor :title, :contents
+    attr_reader :path, :uri
+</code></pre>
       </td>
     </tr>
-    <tr id='section-13'>
-      <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-13">#</a>
+    <tr id="section-13">
+      <td class="docs">
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-13">&#182;</a>
         </div>
-        <p> Class level attr_accessors. We use them for configuring: <code>Page.content_dir = '/tmp'</code></p>
+        <p>Class level attr_accessors. We use them for configuring: <code>Page.content_dir = '/tmp'</code></p>
       </td>
-      <td class=code>
-        <div class='highlight'><pre>    <span class="n">cattr_accessor</span> <span class="ss">:content_dir</span><span class="p">,</span> <span class="ss">:backups</span><span class="p">,</span> <span class="ss">:caching</span><span class="p">,</span> <span class="ss">:formatter</span></pre></div>
+      <td class="code">
+        <pre class="ruby"><code>    cattr_accessor :content_dir, :backups, :caching, :formatter
+</code></pre>
       </td>
     </tr>
-    <tr id='section-14'>
-      <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-14">#</a>
+    <tr id="section-14">
+      <td class="docs">
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-14">&#182;</a>
         </div>
         <h2>Public methods</h2>
       </td>
-      <td class=code>
-        <div class='highlight'><pre></pre></div>
+      <td class="code">
+        <pre class="ruby"><code></code></pre>
       </td>
     </tr>
-    <tr id='section-15'>
-      <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-15">#</a>
+    <tr id="section-15">
+      <td class="docs">
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-15">&#182;</a>
         </div>
-        <p> Convert <code>uri</code> to <code>path</code>, find the <code>title</code> in <code>contents</code></p>
+        <p>Convert <code>uri</code> to <code>path</code>, find the <code>title</code> in <code>contents</code></p>
       </td>
-      <td class=code>
-        <div class='highlight'><pre>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">uri</span><span class="p">,</span> <span class="n">contents</span><span class="p">)</span>
-      <span class="vi">@path</span><span class="p">,</span> <span class="vi">@uri</span><span class="p">,</span> <span class="vi">@title</span><span class="p">,</span> <span class="vi">@contents</span> <span class="o">=</span> <span class="no">Page</span><span class="o">.</span><span class="n">path_from_uri</span><span class="p">(</span><span class="n">uri</span><span class="p">),</span> <span class="n">uri</span><span class="p">,</span> <span class="no">Page</span><span class="o">.</span><span class="n">find_title</span><span class="p">(</span><span class="n">contents</span><span class="p">),</span> <span class="n">contents</span>
-    <span class="k">end</span></pre></div>
+      <td class="code">
+        <pre class="ruby"><code>    def initialize(uri, contents)
+      @path, @uri, @title, @contents = Page.path_from_uri(uri), uri, Page.find_title(contents), contents
+    end
+</code></pre>
       </td>
     </tr>
-    <tr id='section-16'>
-      <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-16">#</a>
+    <tr id="section-16">
+      <td class="docs">
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-16">&#182;</a>
         </div>
-        <p> Create needed directory hierarchy and backup the file if needed.
- Write <code>@contents</code> to the file and return <code>true</code> or <code>false</code> if
- any error occured</p>
+        <p>Create needed directory hierarchy and backup the file if needed.
+Write <code>@contents</code> to the file and return <code>true</code> or <code>false</code> if
+any error occured</p>
       </td>
-      <td class=code>
-        <div class='highlight'><pre>    <span class="k">def</span> <span class="nf">save</span>
-      <span class="no">FileUtils</span><span class="o">.</span><span class="n">mkdir_p</span><span class="p">(</span><span class="no">File</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vi">@path</span><span class="p">))</span> <span class="k">unless</span> <span class="no">File</span><span class="o">.</span><span class="n">exists?</span><span class="p">(</span><span class="vi">@path</span><span class="p">)</span>
-      <span class="n">backup</span> <span class="k">if</span> <span class="no">Page</span><span class="o">.</span><span class="n">backups?</span> <span class="o">&amp;&amp;</span> <span class="no">File</span><span class="o">.</span><span class="n">exists?</span><span class="p">(</span><span class="vi">@path</span><span class="p">)</span>
+      <td class="code">
+        <pre class="ruby"><code>    def save
+      FileUtils.mkdir_p(File.dirname(@path)) unless File.exists?(@path)
+      backup if Page.backups? &amp;&amp; File.exists?(@path)
 
-      <span class="k">begin</span>
-        <span class="no">File</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="vi">@path</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="p">{</span><span class="o">|</span><span class="n">f</span><span class="o">|</span> <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="vi">@contents</span><span class="p">)}</span>
-        <span class="kp">true</span>
-      <span class="k">rescue</span> <span class="no">StandardError</span>
-        <span class="kp">false</span>
-      <span class="k">end</span>
-    <span class="k">end</span></pre></div>
+      begin
+        File.open(@path, &quot;w&quot;) {|f| f.write(@contents)}
+        true
+      rescue StandardError
+        false
+      end
+    end
+</code></pre>
       </td>
     </tr>
-    <tr id='section-17'>
-      <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-17">#</a>
+    <tr id="section-17">
+      <td class="docs">
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-17">&#182;</a>
         </div>
-        <p> Save <code>@contents</code> formatted with <code>Page.formatter</code> to the cache file
- <code>index.text</code> &ndash;> <code>index.text.html</code></p>
+        <p>Save <code>@contents</code> formatted with <code>Page.formatter</code> to the cache file
+<code>index.text</code> &ndash;> <code>index.text.html</code></p>
       </td>
-      <td class=code>
-        <div class='highlight'><pre>    <span class="k">def</span> <span class="nf">cache!</span>
-      <span class="no">File</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="vi">@path</span> <span class="o">+</span> <span class="no">CACHED_FILE_EXT</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="p">{</span><span class="o">|</span><span class="n">f</span><span class="o">|</span> <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="vc">@@formatter</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="vi">@contents</span><span class="p">))}</span>
-    <span class="k">end</span></pre></div>
+      <td class="code">
+        <pre class="ruby"><code>    def cache!
+      File.open(@path + CACHED_FILE_EXT, 'w') {|f| f.write(@@formatter.call(@contents))}
+    end
+</code></pre>
       </td>
     </tr>
-    <tr id='section-18'>
-      <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-18">#</a>
+    <tr id="section-18">
+      <td class="docs">
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-18">&#182;</a>
         </div>
-        <p> Delete the cache file</p>
+        <p>Delete the cache file</p>
       </td>
-      <td class=code>
-        <div class='highlight'><pre>    <span class="k">def</span> <span class="nf">sweep!</span>
-      <span class="no">File</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="vi">@path</span> <span class="o">+</span> <span class="no">CACHED_FILE_EXT</span><span class="p">)</span>
-    <span class="k">end</span></pre></div>
+      <td class="code">
+        <pre class="ruby"><code>    def sweep!
+      File.delete(@path + CACHED_FILE_EXT)
+    end
+</code></pre>
       </td>
     </tr>
-    <tr id='section-19'>
-      <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-19">#</a>
+    <tr id="section-19">
+      <td class="docs">
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-19">&#182;</a>
         </div>
-        <p> Return an array of the page revisions</p>
+        <p>Return an array of the page revisions</p>
       </td>
-      <td class=code>
-        <div class='highlight'><pre>    <span class="k">def</span> <span class="nf">revisions</span>
-      <span class="vi">@revisions</span> <span class="o">||=</span> <span class="n">find_revisions</span>
-    <span class="k">end</span></pre></div>
+      <td class="code">
+        <pre class="ruby"><code>    def revisions
+      @revisions ||= find_revisions
+    end
+</code></pre>
       </td>
     </tr>
-    <tr id='section-20'>
-      <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-20">#</a>
+    <tr id="section-20">
+      <td class="docs">
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-20">&#182;</a>
         </div>
-        <p> Return <code>@contents</code> HTML representation.
- If a page fragments caching enabled (<code>Page.caching = true</code>) then
- regenerate the fragment cache (<code>index.text.html</code>) if needed (it&rsquo;s outdated or doesn&rsquo;t exist)
- and return the cached contents.
- Otherwise (<code>Page.caching = false</code>) return <code>@contents</code> formatted with <code>Page.formatter</code></p>
+        <p>Return <code>@contents</code> HTML representation.
+If a page fragments caching enabled (<code>Page.caching = true</code>) then
+regenerate the fragment cache (<code>index.text.html</code>) if needed (it&rsquo;s outdated or doesn&rsquo;t exist)
+and return the cached contents.
+Otherwise (<code>Page.caching = false</code>) return <code>@contents</code> formatted with <code>Page.formatter</code></p>
       </td>
-      <td class=code>
-        <div class='highlight'><pre>    <span class="k">def</span> <span class="nf">to_html</span>
-      <span class="k">if</span> <span class="no">Page</span><span class="o">.</span><span class="n">caching?</span>
-        <span class="n">cached</span> <span class="o">=</span> <span class="vi">@path</span> <span class="o">+</span> <span class="no">CACHED_FILE_EXT</span>
-        <span class="n">cache!</span> <span class="k">if</span> <span class="o">!</span><span class="no">File</span><span class="o">.</span><span class="n">exists?</span><span class="p">(</span><span class="n">cached</span><span class="p">)</span> <span class="o">||</span> <span class="no">File</span><span class="o">.</span><span class="n">mtime</span><span class="p">(</span><span class="vi">@path</span><span class="p">)</span> <span class="o">&gt;</span> <span class="no">File</span><span class="o">.</span><span class="n">mtime</span><span class="p">(</span><span class="n">cached</span><span class="p">)</span>
+      <td class="code">
+        <pre class="ruby"><code>    def to_html
+      if Page.caching?
+        cached = @path + CACHED_FILE_EXT
+        cache! if !File.exists?(cached) || File.mtime(@path) &gt; File.mtime(cached)
 
-        <span class="no">File</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">cached</span><span class="p">)</span><span class="o">.</span><span class="n">read</span>
-      <span class="k">else</span>
-        <span class="vc">@@formatter</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="vi">@contents</span><span class="p">)</span>
-      <span class="k">end</span>
-    <span class="k">end</span></pre></div>
+        File.open(cached).read
+      else
+        @@formatter.call(@contents)
+      end
+    end
+</code></pre>
       </td>
     </tr>
-    <tr id='section-21'>
-      <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-21">#</a>
+    <tr id="section-21">
+      <td class="docs">
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-21">&#182;</a>
         </div>
-        <p> Tiny <code>attr_writer</code> for <code>@@content_dir</code> which creates the content directory if it doesn&rsquo;t exist</p>
+        <p>Tiny <code>attr_writer</code> for <code>@@content_dir</code> which creates the content directory if it doesn&rsquo;t exist</p>
       </td>
-      <td class=code>
-        <div class='highlight'><pre>    <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">content_dir</span><span class="o">=</span><span class="p">(</span><span class="n">dir</span><span class="p">)</span>
-      <span class="vc">@@content_dir</span> <span class="o">=</span> <span class="n">dir</span>
-      <span class="no">FileUtils</span><span class="o">.</span><span class="n">mkdir_p</span><span class="p">(</span><span class="vc">@@content_dir</span><span class="p">)</span> <span class="k">if</span> <span class="o">!</span><span class="no">File</span><span class="o">.</span><span class="n">exists?</span><span class="p">(</span><span class="vc">@@content_dir</span><span class="p">)</span>
-    <span class="k">end</span></pre></div>
+      <td class="code">
+        <pre class="ruby"><code>    def self.content_dir=(dir)
+      @@content_dir = dir
+      begin
+        FileUtils.mkdir_p(@@content_dir) if !File.exists?(@@content_dir)
+      rescue Errno::EACCES</code></pre>
       </td>
     </tr>
-    <tr id='section-22'>
-      <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-22">#</a>
+    <tr id="section-22">
+      <td class="docs">
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-22">&#182;</a>
+        </div>
+        <p>Can&rsquo;t create content dir, using current working dir</p>
+      </td>
+      <td class="code">
+        <pre class="ruby"><code>        @@content_dir = &quot;.&quot;
+      end
+    end
+</code></pre>
+      </td>
+    </tr>
+    <tr id="section-23">
+      <td class="docs">
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-23">&#182;</a>
         </div>
         <h2>Protected methods</h2>
       </td>
-      <td class=code>
-        <div class='highlight'><pre>    <span class="kp">protected</span></pre></div>
+      <td class="code">
+        <pre class="ruby"><code>
+    protected</code></pre>
       </td>
     </tr>
-    <tr id='section-23'>
-      <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-23">#</a>
+    <tr id="section-24">
+      <td class="docs">
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-24">&#182;</a>
         </div>
-        <p> Find the title in contents (html or markdown variant).
- Return <code>""</code> if nothing found.</p>
+        <p>Find the title in contents (html or markdown variant).
+Return <code>""</code> if nothing found.</p>
       </td>
-      <td class=code>
-        <div class='highlight'><pre>    <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">find_title</span><span class="p">(</span><span class="n">contents</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
-      <span class="k">if</span> <span class="n">contents</span><span class="o">.</span><span class="n">detect</span> <span class="p">{</span><span class="o">|</span><span class="n">s</span><span class="o">|</span> <span class="n">s</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="no">MD_TITLE</span><span class="p">)}</span>
-        <span class="vg">$2</span><span class="o">.</span><span class="n">strip</span> <span class="o">||</span> <span class="vg">$4</span><span class="o">.</span><span class="n">strip</span>
-      <span class="k">elsif</span> <span class="n">contents</span><span class="o">.</span><span class="n">detect</span> <span class="p">{</span><span class="o">|</span><span class="n">s</span><span class="o">|</span> <span class="n">s</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="no">HTML_TITLE</span><span class="p">)}</span>
-        <span class="vg">$2</span><span class="o">.</span><span class="n">strip</span>
-      <span class="k">else</span>
-        <span class="s2">&quot;&quot;</span>
-      <span class="k">end</span>
-    <span class="k">end</span></pre></div>
+      <td class="code">
+        <pre class="ruby"><code>    def self.find_title(contents=&quot;&quot;)
+      if contents.match(MD_TITLE)
+        $2.strip || $4.strip
+      elsif contents.match(HTML_TITLE)
+        $2.strip
+      else
+        &quot;&quot;
+      end
+    end
+</code></pre>
       </td>
     </tr>
-    <tr id='section-24'>
-      <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-24">#</a>
+    <tr id="section-25">
+      <td class="docs">
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-25">&#182;</a>
         </div>
-        <p> Collect only timestamps of revisions.
- <code>index.1273434670.text</code>, <code>index.1273434450.text</code> &ndash;> <code>["1273434670", "1273434450"]</code></p>
+        <p>Collect only timestamps of revisions.
+<code>index.1273434670.text</code>, <code>index.1273434450.text</code> &ndash;> <code>["1273434670", "1273434450"]</code></p>
       </td>
-      <td class=code>
-        <div class='highlight'><pre>    <span class="k">def</span> <span class="nf">find_revisions</span>
-      <span class="no">Dir</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="no">File</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vi">@path</span><span class="p">))</span> <span class="k">do</span>
-        <span class="n">basename</span> <span class="o">=</span> <span class="no">File</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="vi">@path</span><span class="p">,</span> <span class="no">SOURCE_FILE_EXT</span><span class="p">)</span>
-        <span class="no">Dir</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">basename</span> <span class="o">+</span> <span class="s2">&quot;.*&quot;</span> <span class="o">+</span> <span class="no">SOURCE_FILE_EXT</span><span class="p">)</span><span class="o">.</span>
-                <span class="n">collect</span> <span class="p">{</span><span class="o">|</span><span class="n">f</span><span class="o">|</span> <span class="no">File</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="no">SOURCE_FILE_EXT</span><span class="p">)</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">basename</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)}</span>
-      <span class="k">end</span>
-    <span class="k">end</span></pre></div>
+      <td class="code">
+        <pre class="ruby"><code>    def find_revisions
+      Dir.chdir(File.dirname(@path)) do
+        basename = File.basename(@path, SOURCE_FILE_EXT)
+        Dir.glob(basename + &quot;.*&quot; + SOURCE_FILE_EXT).
+                collect {|f| File.basename(f, SOURCE_FILE_EXT).sub(basename, '')}
+      end
+    end
+</code></pre>
       </td>
     </tr>
-    <tr id='section-25'>
-      <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-25">#</a>
+    <tr id="section-26">
+      <td class="docs">
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-26">&#182;</a>
         </div>
-        <p> Backup the file by copying it&rsquo;s current version to the same file but with the current timestamp.
- <code>index.text</code> &ndash;> <code>index.1273434670.text</code></p>
+        <p>Backup the file by copying it&rsquo;s current version to the same file but with the current timestamp.
+<code>index.text</code> &ndash;> <code>index.1273434670.text</code></p>
 
       </td>
-      <td class=code>
-        <div class='highlight'><pre>    <span class="k">def</span> <span class="nf">backup</span>
-      <span class="no">FileUtils</span><span class="o">.</span><span class="n">cp</span><span class="p">(</span><span class="vi">@path</span><span class="p">,</span> <span class="vi">@path</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="no">Regexp</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">#{</span><span class="no">SOURCE_FILE_EXT</span><span class="si">}</span><span class="s2">$&quot;</span><span class="p">),</span> <span class="s2">&quot;.</span><span class="si">#{</span><span class="no">Time</span><span class="o">.</span><span class="n">now</span><span class="o">.</span><span class="n">to_i</span><span class="o">.</span><span class="n">to_s</span><span class="si">}#{</span><span class="no">SOURCE_FILE_EXT</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">))</span>
-    <span class="k">end</span>
+      <td class="code">
+        <pre class="ruby"><code>    def backup
+      FileUtils.cp(@path, @path.sub(Regexp.new(&quot;#{SOURCE_FILE_EXT}$&quot;), &quot;.#{Time.now.to_i.to_s}#{SOURCE_FILE_EXT}&quot;))
+    end
     
-  <span class="k">end</span>
-<span class="k">end</span></pre></div>
+  end
+end</code></pre>
       </td>
     </tr>
-    </table>
+  </tbody>
+  </table>
 </div>
 </body>
 </html>
